@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Counter</title>
+    <!-- Funnel Sans Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        background: #2d014d;
+        color: #fff;
+        font-family: "Funnel Sans", Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s;
+        flex-direction: column;
+      }
+      .counter-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .counter-number {
+        font-size: 400px;
+        font-weight: 700;
+        user-select: none;
+        line-height: 1;
+        letter-spacing: 2px;
+        transition: color 0.3s;
+      }
+      .reset-btn {
+        margin-top: 40px;
+        width: 100px;
+        height: 40px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        background: #fff;
+        color: #2d014d;
+        font-family: "Funnel Sans", Arial, sans-serif;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .reset-btn:hover {
+        background: #e0e0e0;
+        color: #1a002b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="counter-container" id="counterContainer">
+      <div class="counter-number" id="counterNumber">0</div>
+      <button class="reset-btn" id="resetBtn">Reset</button>
+    </div>
+    <script>
+      const counterNumber = document.getElementById("counterNumber");
+      const resetBtn = document.getElementById("resetBtn");
+      const counterContainer = document.getElementById("counterContainer");
+      let count = 0;
+
+      function updateCounter() {
+        counterNumber.textContent = count;
+        if (count >= 108) {
+          document.body.style.background = "#16a34a";
+        } else {
+          document.body.style.background = "#2d014d";
+        }
+      }
+
+      function incrementCounter() {
+        count++;
+        updateCounter();
+      }
+
+      // Space bar event
+      document.addEventListener("keydown", (e) => {
+        if (e.code === "Space" && !e.repeat) {
+          incrementCounter();
+        }
+      });
+
+      // Click anywhere except reset button
+      counterContainer.addEventListener("click", (e) => {
+        if (e.target !== resetBtn) {
+          incrementCounter();
+        }
+      });
+
+      // Reset button
+      resetBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        count = 0;
+        updateCounter();
+      });
+
+      // Initial render
+      updateCounter();
+
+      document.addEventListener("keydown", (e) => {
+        if (e.code === "Space" && !e.repeat) {
+          incrementCounter();
+        } else if (e.code === "ArrowRight" && !e.repeat) {
+          incrementCounter();
+        } else if (e.code === "ArrowLeft" && !e.repeat) {
+          if (count > 0) {
+            count--;
+            updateCounter();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
